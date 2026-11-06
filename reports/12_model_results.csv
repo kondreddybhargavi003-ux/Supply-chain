@@ -1,0 +1,19 @@
+split,fit_on,model,MAE,RMSE,WAPE_%,bias
+val,-,baseline: last_week,2.3511,4.5345,93.7367,-0.7326
+val,-,baseline: mean_4_weeks,2.5178,4.3313,100.3842,-1.1436
+val,-,baseline: series_mean,2.0241,3.1574,80.7026,-0.979
+test,-,baseline: last_week,1.9596,3.5047,62.2898,-0.1212
+test,-,baseline: mean_4_weeks,1.9292,3.3368,61.3244,-0.1923
+test,-,baseline: series_mean,2.1339,3.5446,67.8309,-0.1603
+val,train,linear,1.9248,3.295,76.7402,-0.5422
+test,train,linear,1.8876,3.158,60.0013,-0.0558
+test,train+val,linear,1.8379,3.1522,58.4231,0.2559
+val,train,random_forest,2.7975,4.3808,111.5346,-1.968
+test,train,random_forest,2.3796,3.7103,75.641,-1.3531
+test,train+val,random_forest,2.061,3.4612,65.5119,-0.0638
+val,train,xgb_squared,2.6447,4.2645,105.4453,-1.768
+test,train,xgb_squared,2.5727,4.0473,81.7782,-1.4522
+test,train+val,xgb_squared,2.2772,3.7047,72.3846,-0.7019
+val,train,xgb_poisson,2.2389,3.446,89.2647,-1.2665
+test,train,xgb_poisson,2.0716,3.279,65.8488,-0.7185
+test,train+val,xgb_poisson,1.9457,3.3058,61.8485,-0.0375
