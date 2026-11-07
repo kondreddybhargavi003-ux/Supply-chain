@@ -1,0 +1,7 @@
+lead_days,policy,avg_rop,selling_pairs_at_or_below_rop,shortfall_units
+7,standard,1.131,6741,4088.0
+7,high,1.551,7855,7920.0
+14,standard,1.439,7867,8176.0
+14,high,2.205,8447,12311.0
+28,standard,2.072,8613,14093.0
+28,high,2.82,9210,20459.0
