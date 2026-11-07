@@ -1,244 +1,166 @@
-# 📦 StockSense – Supply Chain Intelligence & Inventory Optimization
+# README.md
 
-**An End-to-End Data Science and Machine Learning Project**
+## StockSense: Supply Chain Intelligence and Inventory Optimization
 
-StockSense is a data-driven supply chain intelligence and inventory optimization project designed to help retail businesses make smarter inventory decisions using historical sales, inventory, and procurement data.
-
-The project focuses on understanding product demand, identifying potential stockout risks, analyzing inventory patterns, and supporting better procurement decisions through Data Science and Machine Learning.
+This repository contains a complete end‑to‑end data‑science project that ingests retail sales, inventory, and procurement data, performs data cleaning, exploratory data analysis (EDA), demand forecasting, stock‑out prediction, and inventory optimisation, and finally presents the results in an interactive Streamlit dashboard and a lightweight FastAPI service.
 
 ---
 
-## 🎯 Project Objectives
+### Table of Contents
 
-- **Demand Forecasting:** Predict future product demand using historical sales data.
-- **Stockout Prediction:** Identify products that may run out of stock and help businesses take preventive action.
-- **Inventory Optimization:** Support inventory planning using demand forecasts and available stock information.
-- **Procurement Analysis:** Analyze suppliers, purchase orders, goods receipts, and supplier invoices.
-- **Data-Driven Decisions:** Transform raw business data into meaningful insights and predictions.
-
----
-
-## 📊 Datasets
-
-The project uses retail and procurement datasets collected from external data sources.
-
-### 1. Retail Datasets
-
-| Dataset | Records | Columns |
-|---|---:|---:|
-| Retail Inventory | 284,755 | 18 |
-| Retail Sales | 125,751 | 17 |
-
-**Inventory dataset includes:**
-- Product and supplier information
-- Store and sales channel information
-- Available stock quantity
-- Stock selling amount and cost
-- Inventory start and end dates
-
-**Sales dataset includes:**
-- Transaction dates
-- Product and store information
-- Quantity sold
-- Sales amount and cost of goods sold
-- Sales type and return indicators
-
-### 2. Procurement Datasets
-
-The procurement dataset consists of eight related CSV files.
-
-| Dataset | Records |
-|---|---:|
-| Buyers | 5 |
-| Goods Receipts | 89 |
-| Items | 20 |
-| PO Lines | 91 |
-| Purchase Orders | 36 |
-| Requisitions | 150 |
-| Suppliers | 14 |
-| Supplier Invoices | 87 |
-
-These datasets provide information about purchasing activities, suppliers, procurement requests, goods receipts, and invoice processing.
-
-**Note:** Retail and procurement datasets are currently treated as separate data sources because a verified mapping between their product identifiers has not yet been established.
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Run the full pipeline](#run-the-full-pipeline)
+  - [Launch the dashboard](#launch-the-dashboard)
+  - [Start the API server](#start-the-api-server)
+  - [Run the test suite](#run-the-test-suite)
+- [Outputs](#outputs)
+- [References](#references)
 
 ---
 
-## 🏗️ Project Workflow
+### Project Structure
 
-The project follows an end-to-end Data Science and Machine Learning workflow.
-
-1. **Dataset Collection**
-   - Collect retail sales, inventory, and procurement datasets.
-   - Organize raw files into structured directories.
-
-2. **Data Understanding**
-   - Explore dataset structure and dimensions.
-   - Understand columns, data types, and business meaning.
-
-3. **Data Quality Analysis**
-   - Identify missing values.
-   - Check duplicate records.
-   - Validate dates and data relationships.
-   - Investigate inconsistent records.
-
-4. **Data Preprocessing**
-   - Handle missing and invalid values.
-   - Convert appropriate data types.
-   - Clean and prepare datasets for analysis.
-
-5. **Exploratory Data Analysis (EDA)**
-   - Analyze sales trends.
-   - Study product and store performance.
-   - Explore inventory patterns.
-   - Analyze procurement activities.
-
-6. **Feature Engineering**
-   - Create time-based features.
-   - Generate lag and rolling statistical features.
-   - Develop inventory-related indicators.
-
-7. **Machine Learning**
-   - Build demand forecasting models.
-   - Develop stockout prediction models.
-   - Compare candidate algorithms.
-
-8. **Model Evaluation**
-   - Evaluate forecasting performance.
-   - Assess classification performance.
-   - Compare models and select suitable approaches.
-
-9. **Application Development**
-   - Develop an interactive Streamlit application.
-   - Display demand forecasts, inventory insights, and stockout risk predictions.
-
----
-
-## 🤖 Planned Machine Learning Models
-
-The following are candidate algorithms to be evaluated during experimentation.
-
-### Demand Forecasting
-- Linear Regression
-- Random Forest Regressor
-- XGBoost Regressor
-- Suitable time-series forecasting methods
-
-### Stockout Prediction
-- Logistic Regression
-- Decision Tree Classifier
-- Random Forest Classifier
-- XGBoost Classifier
-
-Final models will be selected based on experimental results and appropriate validation.
-
----
-
-## 🛠️ Technology Stack
-
-| Category | Technologies |
-|---|---|
-| Programming Language | Python |
-| Data Manipulation | Pandas, NumPy |
-| Data Visualization | Matplotlib, Seaborn |
-| Machine Learning | Scikit-learn |
-| Advanced ML | XGBoost |
-| Application Development | Streamlit |
-| Development Environment | Antigravity IDE |
-| Version Control | Git, GitHub |
-
----
-
-## 📁 Project Structure
-
-```text
-StockSense/
+```
+.
+├─ data
+│  ├─ raw                 # Original CSV files (sales, inventory, procurement)
+│  └─ processed           # Cleaned CSVs produced by the pipeline
 │
-├── app/
-│   └── Streamlit application
+├─ src                     # Re‑usable Python modules
+│  └─ data
+│      ├─ __init__.py
+│      └─ preprocess.py    # Clean‑ing logic (replaces scripts/07_preprocessing.py)
 │
-├── data/
-│   ├── raw/
-│   │   ├── Inventory/
-│   │   ├── Sales/
-│   │   └── Procurement/
-│   │
-│   └── processed/
-│       ├── sales_clean.csv
-│       └── inventory_intervals_clean.csv
+├─ scripts                 # Original analysis scripts (kept for reference)
+│  ├─ 01_load_and_inspect.py
+│  ├─ ...
+│  └─ 23_procurement_tables.py
 │
-├── models/
-│   └── Trained model files
+├─ reports                 # Text output files and generated figures
+│  ├─ *.txt
+│  ├─ figures
+│  │   └─ *.png
+│  └─ project_audit.md     # Full audit created by the agent
 │
-├── notebooks/
-│   └── Data exploration and analysis
+├─ dashboard               # Streamlit application
+│  ├─ app.py               # Main entry point (multipage)
+│  └─ pages                # Individual pages (optional)
 │
-├── reports/
-│   └── Analysis and preprocessing reports
+├─ api                     # FastAPI service exposing summaries & predictions
+│  └─ app.py
 │
-├── scripts/
-│   └── Data processing scripts
+├─ tests                   # Automated pytest suite
+│  ├─ conftest.py
+│  ├─ test_preprocess.py
+│  ├─ test_pipeline.py
+│  └─ test_dashboard.py
 │
-├── .gitignore
-├── requirements.txt
-└── README.md
+├─ requirements.txt        # Pin‑exact versions of all Python dependencies
+├─ run_pipeline.py         # Orchestrates preprocessing, EDA, modeling, final stage
+├─ .gitignore
+└─ README.md
 ```
 
-*The structure will evolve as the project progresses.*
+---
+
+### Installation
+
+1. **Clone the repository** (if you haven't already) and navigate to the project root:
+   ```
+   git clone <repo‑url>
+   cd "SS - Copy"
+   ```
+
+2. **Create a virtual environment** (recommended) and activate it:
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1   # PowerShell
+   # or venv\Scripts\activate.bat for cmd
+   ```
+
+3. **Install the pinned dependencies**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+   *If you are on a machine without internet access, you can pre‑download the wheels on another computer (`pip download -r requirements.txt -d wheelhouse`) and then install locally with `pip install --no-index --find-links=wheelhouse -r requirements.txt`.*
 
 ---
 
-## 📈 Expected Outcomes
+### Usage
 
-The final StockSense system aims to provide:
+#### Run the full pipeline
 
-- Product-level demand forecasts.
-- Early identification of potential stockout risks.
-- Inventory planning insights.
-- Supplier and procurement analysis.
-- Interactive visualizations and business insights.
-- A machine learning-based decision-support application.
+The pipeline will generate cleaned data, all EDA figures, model artefacts and final reports. It is idempotent – stages are skipped if their outputs already exist.
+
+```powershell
+python run_pipeline.py          # runs all stages (preprocess → final)
+# or run a specific stage, e.g.:
+python run_pipeline.py --stage eda
+```
+
+#### Launch the dashboard
+
+The interactive dashboard reads the artefacts produced by the pipeline and visualises them with Plotly.
+
+```powershell
+streamlit run dashboard/app.py
+```
+
+Open the URL printed by Streamlit (normally `http://localhost:8501`). The dashboard contains the following pages:
+- **Executive Summary** – high‑level KPIs and back‑testing results.
+- **Sales Analytics** – weekly trends, category/store breakdowns, price analysis.
+- **Inventory Analytics** – stock‑out rates, excess inventory, inventory‑vs‑sales heatmaps.
+- **Demand Forecasting** – model evaluation metrics and forecast plots.
+- **Stock‑out Prediction** – ROC/PR curves, confusion matrix.
+- **Inventory Optimisation** – reorder point heatmaps, sensitivity analysis.
+- **Procurement Analytics** – supplier spending, lead‑time distribution, invoice status.
+
+#### Start the API server
+
+A minimal FastAPI service provides the same summaries and model predictions as JSON endpoints.
+
+```powershell
+uvicorn api.app:app --reload
+```
+
+Available endpoints (see `api/app.py` for details):
+- `GET /summary` – executive KPIs.
+- `GET /sales/weekly` – weekly gross units.
+- `GET /inventory/stockout` – daily stock‑out share.
+- `POST /demand/predict` – forecasting predictions for a given product‑store pair.
+
+#### Run the test suite
+
+The repository includes a comprehensive pytest suite that checks data integrity, preprocessing idempotency, model shapes, and that the dashboard can be imported without error.
+
+```powershell
+pytest -q
+```
+
+All tests should pass on a clean environment.
 
 ---
 
-## 🚧 Project Status
+### Outputs
 
-**Currently under development.**
-
-| Phase | Status |
-|---|---|
-| Dataset Collection | Completed |
-| Initial Data Understanding | Completed |
-| Data Quality Analysis | Completed |
-| Relationship and Date Checks | Completed |
-| Data Preprocessing | In Progress |
-| Exploratory Data Analysis | Upcoming |
-| Feature Engineering | Upcoming |
-| Machine Learning | Upcoming |
-| Model Evaluation | Upcoming |
-| Streamlit Application | Planned |
+After a successful pipeline run you will find:
+- **Cleaned CSVs** in `data/processed/` (`sales_clean.csv`, `inventory_intervals_clean.csv`).
+- **Figures** in `reports/figures/` (weekly demand, stock‑out rates, ROC curves, etc.).
+- **Model artefacts** in `models/` (joblib files for demand, stock‑out, and optimisation).
+- **Report markdown files** in `reports/` (EDA report, model evaluation, optimisation report, final executive report).
+- **Dashboard** (`dashboard/app.py`) and **API** (`api/app.py`).
 
 ---
 
-## 🚀 Future Enhancements
-
-- Advanced demand forecasting.
-- Improved stockout risk estimation.
-- Inventory reorder recommendations.
-- Supplier performance evaluation.
-- Interactive inventory monitoring.
-- Model explainability and prediction insights.
+### References
+- Original StockSense project code (scripts 01‑23).
+- Pandas, NumPy, scikit‑learn, XGBoost, Plotly, Streamlit documentation.
+- FastAPI documentation for building lightweight services.
 
 ---
 
-## 👩‍💻 Author
+**Happy analysing!**
 
-**Bhargavi**
-
-GitHub: [@kondreddybhargavi003-ux](https://github.com/kondreddybhargavi003-ux)
-
----
-
-⭐ If you find this project interesting, feel free to explore the repository and follow its development.
-
-**StockSense – Turning Supply Chain Data into Smarter Inventory Decisions.**
+*If you encounter any issues, feel free to open a GitHub issue or contact the repository maintainer.*
